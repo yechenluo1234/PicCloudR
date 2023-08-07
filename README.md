@@ -88,6 +88,7 @@ python run.py
 
 响应内容：
 
+> 上传成功响应码为 `201`
 ```json
 {
 	"file_url": "/images/1.png",
