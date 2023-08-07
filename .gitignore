@@ -1,3 +1,4 @@
 .vscode/
 uploads/
 __pycache__/
+dev_config.py

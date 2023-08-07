@@ -50,7 +50,7 @@ def upload_from_base64():
                 "message": "图片上传成功",
                 "file_url": f"/images/{filename}"
             }
-            return jsonify(response), 200
+            return jsonify(response), 201
         else:
             response = {
                 "message": "图片上传失败"

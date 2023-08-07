@@ -25,20 +25,18 @@ def save_base64(base64_data,filename):
         max_attempts = 10  
         attempts = 0
 
-        # 检查文件是否存在
-        while (os.path.exists(file_path))and attempts < max_attempts:
+        while (os.path.exists(file_path)) and attempts < max_attempts:
             filename = generate_filename(file_extension)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            attempts += 1
 
         if attempts == max_attempts:
             return None
 
-
-
         file_data = base64.b64decode(base64_data)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         with open(file_path, 'wb') as f:
             f.write(file_data)
-        
+
         return filename
     except Exception as e:
         print("Error saving file:", e)
