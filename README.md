@@ -75,7 +75,7 @@ python run.py
 
 接口参数： 
 
-> 注：需传递 `token` 通过 `Authorization` 请求头
+> 注：需传递 `token` 通过 `Authorization` 请求头，遵循 `Bearer Token`认证方案
 
 ```json
 {

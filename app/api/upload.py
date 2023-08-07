@@ -31,8 +31,19 @@ def upload_from_base64():
                 "message": "缺少认证Token"
             }
             return jsonify(response), 401
-        
-        decoded_payload = verify_token(token)
+
+        # 分割 Authorization 头部，获取实际的 token 部分
+        token_parts = token.split()
+        if len(token_parts) != 2 or token_parts[0].lower() != 'bearer':
+            response = {
+                "message": "Token格式不正确"
+            }
+            return jsonify(response), 401
+
+        # 获取实际的 token
+        actual_token = token_parts[1]
+
+        decoded_payload = verify_token(actual_token)
         if not decoded_payload or decoded_payload['username'] != app.config['ADMIN_USERNAME']:
             response = {
                 "message": "Token无效或与用户不匹配"
