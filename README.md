@@ -35,7 +35,8 @@ PORT = 5000
 
 ```bash
 pip install -r requirements.txt
-py run.py
+python run.py 
+# 可能为 python3 和 pip3
 ```
 
 # 接口文档
