@@ -29,6 +29,9 @@ ADMIN_PASSWORD='123123'
 
 # 端口号
 PORT = 5000
+
+#debug
+DEBUG = False
 ```
 
 ### 启动项目
