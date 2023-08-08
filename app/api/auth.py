@@ -1,3 +1,4 @@
+from termcolor import colored
 from app import app
 from flask import request, jsonify
 
@@ -15,7 +16,8 @@ def admin_login():
             if username == app.config['ADMIN_USERNAME'] and password == app.config['ADMIN_PASSWORD']:
                 
                 token = generate_token(username)
-                
+                colored_username = colored(username, 'yellow')
+                app.logger.info('login: %s', colored_username)
                 response = {
                     'message': '登录成功',
                     'token': token

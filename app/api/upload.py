@@ -1,5 +1,6 @@
 import os
 from flask import request, jsonify
+from termcolor import colored
 from app import app
 
 from app.utils.auth import verify_token
@@ -57,6 +58,8 @@ def upload_from_base64():
         # 保存图片
         filename = save_base64(image_base64,filename)
         if filename:
+            colored_filename = colored(filename, 'yellow')
+            app.logger.info('upload: %s', colored_filename)
             response = {
                 "message": "图片上传成功",
                 "file_url": f"/images/{filename}"

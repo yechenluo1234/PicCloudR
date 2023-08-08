@@ -9,3 +9,5 @@ ADMIN_PASSWORD='123123'
 
 # 端口号
 PORT = 5000
+
+DEBUG=False
