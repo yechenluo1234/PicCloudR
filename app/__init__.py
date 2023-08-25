@@ -32,4 +32,4 @@ app.logger.info("Initialization complete")
 if(app.config['DEBUG']):
     app.logger.info("Running in DEBUG mode")
 
-from app.api import upload, retrieve, auth
+from app.api import upload, retrieve, auth ,delete

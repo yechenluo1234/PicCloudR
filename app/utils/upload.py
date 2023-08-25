@@ -1,4 +1,5 @@
 import base64
+import datetime
 import os
 import time
 
@@ -8,6 +9,17 @@ from app import app
 def generate_filename(file_extension):
     timestamp_ns = int(time.time_ns())
     return f"{timestamp_ns}{file_extension}"
+
+def create_subfolder(base_folder):
+    today = datetime.date.today()
+    subfolder_name = today.strftime('%Y-%m-%d')  # 根据日期创建子文件夹名
+    subfolder_path = os.path.join(base_folder, subfolder_name)
+    
+    if not os.path.exists(subfolder_path):
+        os.makedirs(subfolder_path)
+    
+    return subfolder_path,subfolder_name
+
 
 def save_base64(base64_data,filename):
     try:
@@ -27,7 +39,8 @@ def save_base64(base64_data,filename):
 
         while (os.path.exists(file_path)) and attempts < max_attempts:
             filename = generate_filename(file_extension)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            subfolder_path,subfolder_name = create_subfolder(app.config['UPLOAD_FOLDER'])
+            file_path = os.path.join(subfolder_path, filename)
             attempts += 1
 
         if attempts == max_attempts:
@@ -37,7 +50,7 @@ def save_base64(base64_data,filename):
         with open(file_path, 'wb') as f:
             f.write(file_data)
 
-        return filename
+        return subfolder_name + "/" + filename
     except Exception as e:
         print("Error saving file:", e)
         return None

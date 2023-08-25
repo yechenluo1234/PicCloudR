@@ -3,21 +3,23 @@ from app import app
 
 from flask import send_from_directory, abort
 
-@app.route('/images/<filename>', methods=['GET'])
-def get_image(filename):
-    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+@app.route('/images/<path:subpath>', methods=['GET'])
+def get_image(subpath):
+    image_path = os.path.join(app.config['UPLOAD_FOLDER'], subpath)
     if os.path.exists(image_path):
+        if os.path.isdir(image_path):
+            abort(404, "图片未找到")
         try:
             # 获取图片的MIME类型
             mime_type = "image/jpeg"  # 默认为JPEG格式
-            if filename.endswith('.png'):
+            if subpath.endswith('.png'):
                 mime_type = "image/png"
 
-            elif filename.endswith('.gif'):
+            elif subpath.endswith('.gif'):
                 mime_type = "image/gif"
 
             # 设置Content-Type头信息，不设置Content-Disposition头信息
-            response = send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+            response = send_from_directory(app.config['UPLOAD_FOLDER'], subpath)
             response.headers['Content-Type'] = mime_type
             return response
         except Exception as e:
