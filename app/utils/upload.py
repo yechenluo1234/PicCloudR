@@ -12,10 +12,8 @@ def generate_filename(file_extension):
 
 
 def create_subfolder(base_folder):
-    app.logger.info("Creating subfolder")
     today = datetime.date.today()
     subfolder_name = today.strftime("%Y-%m-%d")  # 根据日期创建子文件夹名
-    app.logger.info(f"Creating subfolder: {subfolder_name}")
     subfolder_path = os.path.join(base_folder, subfolder_name)
 
     if not os.path.exists(subfolder_path):
