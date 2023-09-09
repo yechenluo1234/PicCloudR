@@ -39,6 +39,8 @@ def save_base64(base64_data, filename):
 
         subfolder_path, subfolder_name = create_subfolder(app.config["UPLOAD_FOLDER"])
 
+        file_path = os.path.join(subfolder_path, filename)
+
         while (os.path.exists(file_path)) and attempts < max_attempts:
             filename = generate_filename(file_extension)
             file_path = os.path.join(subfolder_path, filename)
