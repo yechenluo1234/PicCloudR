@@ -2,6 +2,7 @@ import jwt
 import datetime
 from app import app
 
+
 def generate_token(username):
     payload = {
         'username': username,
@@ -9,6 +10,7 @@ def generate_token(username):
     }
     token = jwt.encode(payload, app.config['JWT_SECRET_KEY'], algorithm='HS256')
     return token
+
 
 def verify_token(token):
     try:

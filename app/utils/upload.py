@@ -57,3 +57,37 @@ def save_base64(base64_data, filename):
     except Exception as e:
         print("Error saving file:", e)
         return None
+
+
+def save_image(image_file, filename):
+    try:
+        if not os.path.exists(app.config["UPLOAD_FOLDER"]):
+            os.makedirs(app.config["UPLOAD_FOLDER"])
+
+        # 指定文件路径
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+
+        # 获取文件的扩展名
+        file_extension = os.path.splitext(filename)[1].lower()
+
+        # 最大尝试次数
+        max_attempts = 10
+        attempts = 0
+
+        subfolder_path, subfolder_name = create_subfolder(app.config["UPLOAD_FOLDER"])
+
+        file_path = os.path.join(subfolder_path, filename)
+
+        while (os.path.exists(file_path)) and attempts < max_attempts:
+            filename = generate_filename(file_extension)
+            file_path = os.path.join(subfolder_path, filename)
+            attempts += 1
+
+        if attempts == max_attempts:
+            return None
+        image_file.save(file_path)
+        return subfolder_name + "/" + filename
+
+    except Exception as e:
+        print("Error saving file:", e)
+        return None

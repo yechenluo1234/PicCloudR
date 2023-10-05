@@ -2,3 +2,4 @@
 uploads/
 __pycache__/
 dev_config.py
+.idea/

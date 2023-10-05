@@ -7,10 +7,11 @@ import datetime
 
 directory_path = app.config['UPLOAD_FOLDER']
 
+
 def delete_old_files(days):
     current_date = datetime.datetime.now()
     three_days_ago = current_date - datetime.timedelta(days=days)
-    
+
     for filename in os.listdir(directory_path):
         try:
             file_date = datetime.datetime.strptime(filename, '%Y-%m-%d')
