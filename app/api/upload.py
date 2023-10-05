@@ -52,9 +52,17 @@ def upload_from_base64():
         if filename:
             colored_filename = colored(filename, "yellow")
             app.logger.info("upload: %s", colored_filename)
+            # 获取原始请求的协议
+            original_protocol = request.headers.get("X-Forwarded-Proto", "http")
+
+            # 使用原始协议构建正确的根URL
+            correct_url_root = request.url_root.replace(
+                "http://", f"{original_protocol}://"
+            )
+
             response = {
                 "message": "图片上传成功",
-                "file_url": f"{request.url_root}images/{filename}",
+                "file_url": f"{correct_url_root}images/{filename}",
             }
             return jsonify(response), 201
         else:
@@ -113,12 +121,18 @@ def upload_image():
             if filename is not None:
                 colored_filename = colored(filename, "yellow")
                 app.logger.info("upload: %s", colored_filename)
-                return jsonify(
-                    {
-                        "message": "图片上传成功",
-                        "file_url": f"{request.url_root}images/{filename}",
-                    }
+                # 获取原始请求的协议
+                original_protocol = request.headers.get("X-Forwarded-Proto", "http")
+
+                # 使用原始协议构建正确的根URL
+                correct_url_root = request.url_root.replace(
+                    "http://", f"{original_protocol}://"
                 )
+
+                response = {
+                    "message": "图片上传成功",
+                    "file_url": f"{correct_url_root}images/{filename}",
+                }
         response = {"message": "图片上传失败"}
         return jsonify(response), 500
 

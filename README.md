@@ -1,16 +1,18 @@
 # 关于本项目
 
-一个基于 `python` 的 *简单* 图床实现
+一个基于 `python` 的 _简单_ 图床实现
 
 此项目为作者的第一个 `python` 项目，会有很多不足之处
-> 作者没有学过python（抹汗）
+
+> 作者没有学过 python（抹汗）
 
 ## 已实现功能
 
-1. 通过base64上传图片接口
+1. 通过 base64 上传图片接口
 2. 登录接口
-4. 图片根据日期分文件存储
-3. 删除过时文件夹
+3. 图片根据日期分文件存储
+4. 删除过时文件夹接口
+5. 通过文件上传图片接口
 
 # 项目搭建
 
@@ -40,7 +42,7 @@ DEBUG = False
 
 ```bash
 pip install -r requirements.txt
-python run.py 
+python run.py
 # 可能为 python3 和 pip3
 ```
 
@@ -56,8 +58,8 @@ python run.py
 
 ```json
 {
-    "username": "admin",
-    "password": "123123"
+  "username": "admin",
+  "password": "123123"
 }
 ```
 
@@ -65,27 +67,27 @@ python run.py
 
 ```json
 {
-	"message": "登录成功",
-	"token": ""
+  "message": "登录成功",
+  "token": ""
 }
 ```
 
-## 上传接口 
+## 上传接口
 
-### 通过base64上传图片
+### 通过 base64 上传图片
 
 接口地址：`/api/uploadByBase64`
 
 接口类型：`POSH`
 
-接口参数： 
+接口参数：
 
 > 注：需传递 `token` 通过 `Authorization` 请求头，遵循 `Bearer Token`认证方案
 
 ```json
 {
-    "filename": "1.png",
-    "imageBase64": ""
+  "filename": "1.png",
+  "imageBase64": ""
 }
 ```
 
@@ -94,17 +96,17 @@ python run.py
 响应内容：
 
 > 上传成功响应码为 `201`
+
 ```json
 {
-	"file_url": "/images/1.png",
-	"message": "图片上传成功"
+  "file_url": "/images/1.png",
+  "message": "图片上传成功"
 }
 ```
 
 > 注：图片访问地址为 `url` + `file_url` 如 `http://127.0.0.1:5000/images/1.png`
 
-
-## 删除接口 
+## 删除接口
 
 ### 删除过时文件夹
 
@@ -114,20 +116,22 @@ python run.py
 
 接口参数：
 
-接口参数： 
+接口参数：
 
 > 注：需传递 `token` 通过 `Authorization` 请求头，遵循 `Bearer Token`认证方案
 
 ```json
 {
-    "days": 3 //过时天数，即只保留3天之内的文件
+  "days": 3 //过时天数，即只保留3天之内的文件
 }
 ```
+
 响应内容：
 
 > 上传成功响应码为 `200`
+
 ```json
 {
-	"message": "删除成功"
+  "message": "删除成功"
 }
 ```
