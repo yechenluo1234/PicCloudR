@@ -133,6 +133,7 @@ def upload_image():
                     "message": "图片上传成功",
                     "file_url": f"{correct_url_root}images/{filename}",
                 }
+                return jsonify(response), 201
         response = {"message": "图片上传失败"}
         return jsonify(response), 500
 
