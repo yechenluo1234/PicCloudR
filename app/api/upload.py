@@ -111,6 +111,8 @@ def upload_image():
             file_path = uploaded_image.filename
             filename = save_image(uploaded_image, file_path)
             if filename is not None:
+                colored_filename = colored(filename, "yellow")
+                app.logger.info("upload: %s", colored_filename)
                 return jsonify(
                     {
                         "message": "图片上传成功",
