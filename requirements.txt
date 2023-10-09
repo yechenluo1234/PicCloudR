@@ -3,3 +3,4 @@ flask_httpauth==4.8.0
 PyJWT==2.8.0
 termcolor==2.3.0
 waitress==2.1.2
+Werkzeug~=2.3.6

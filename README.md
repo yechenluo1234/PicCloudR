@@ -46,6 +46,17 @@ python run.py
 # 可能为 python3 和 pip3
 ```
 
+#### 解决反代导致返回的图片url协议错误:
+
+1. Nginx
+    ```yaml
+    proxy_set_header X-Forwarded-Proto $scheme
+    ```
+2. Apache
+    ```yaml
+    RequestHeader set X-Forwarded-Proto "https" env=HTTPS
+    ```
+
 # 接口文档
 
 ## 登录接口
@@ -74,6 +85,56 @@ python run.py
 
 ## 上传接口
 
+### 上传图片接口
+接口地址: `/api/upload`
+
+接口类型: `POST`
+
+接口参数:
+
+
+> 注：需传递 `token` 通过 `Authorization` 请求头，遵循 `Bearer Token`认证方案
+
++ image (类型: 文件)
+
+   >上传的图片文件，支持格式：.jpg, .png, .gif
+
+请求示例:
+```typescript
+import axios from 'axios';
+
+// 获取文件上传的 input 元素
+const fileInput = document.getElementById('your-file-input') as HTMLInputElement;
+const imageFile = fileInput.files[0];
+
+// 获取认证 Token
+const token = 'your_token_here'; // 替换为实际的认证 token
+
+// 构建 FormData 对象
+const formData = new FormData();
+formData.append('image', imageFile);
+
+// 构建请求头部
+const headers = {
+  'Authorization': `Bearer ${token}`,
+  'Content-Type': 'multipart/form-data',
+};
+
+// 构建请求配置
+const config = {
+  headers: headers,
+};
+
+// 发起请求
+axios.post('https://your-api-host/api/upload', formData, config)
+  .then((response) => {
+    console.log('Success:', response.data);
+  })
+  .catch((error) => {
+    console.error('Error:', error.response.data);
+  });
+```
+
 ### 通过 base64 上传图片
 
 接口地址：`/api/uploadByBase64`
@@ -99,12 +160,11 @@ python run.py
 
 ```json
 {
-  "file_url": "/images/1.png",
+  "file_url": "http://127.0.0.1:5000/images/1.png",
   "message": "图片上传成功"
 }
 ```
 
-> 注：图片访问地址为 `url` + `file_url` 如 `http://127.0.0.1:5000/images/1.png`
 
 ## 删除接口
 
@@ -113,8 +173,6 @@ python run.py
 接口地址：`/api/deleteOldFiles`
 
 接口类型：`POSH`
-
-接口参数：
 
 接口参数：
 
@@ -135,3 +193,4 @@ python run.py
   "message": "删除成功"
 }
 ```
+
